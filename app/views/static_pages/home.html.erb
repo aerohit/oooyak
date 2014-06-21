@@ -1,16 +1,24 @@
+<script>
+  var fortuneSocket = new WebSocket("ws://localhost:9000/fortunesocket");
+  fortuneSocket.onmessage = function (event) {
+    console.log(event);
+    document.getElementById("fortune").innerHTML = event.data;
+  }
+  fortuneSocket.onerror = function (event) {
+    console.log(event);
+  }
+  fortuneSocket.onclose = function (event) {
+    console.log(event);
+  }
+  function getFortune() {
+    fortuneSocket.send("Here's some text that the server is eagerly awaiting!");
+  }
+</script>
+
 <h1>Would you like to know your fotune?</h1>
 
 <p style="font-size: 18px;">Then you are just at the right place.</p>
 
-<script>
-  var exampleSocket = new WebSocket("ws://localhost:9000/fortunesocket");
-  function clickHandler() {
-    exampleSocket.send("Here's some text that the server is urgently awaiting!");
-  }
-  exampleSocket.onmessage = function (event) {
-    document.getElementById("fortune").innerHTML = event.data;
-  }
-</script>
-<a href="" onclick="clickHandler();">Get Fortune</a>
+<a href="" onclick="getFortune();">Get Fortune</a>
 
-<p type="text" id="fortune" size=100></p>
+<p id="fortune"></p>
