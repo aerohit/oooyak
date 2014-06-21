@@ -4,10 +4,17 @@
     console.log(event);
     document.getElementById("fortune").innerHTML = event.data;
   }
+  <%#Yay code duplication.%>
+  fortuneSocket.onopen = function (event) {
+    console.log("Connection opened");
+    console.log(event);
+  }
   fortuneSocket.onerror = function (event) {
+    console.log("Connection error");
     console.log(event);
   }
   fortuneSocket.onclose = function (event) {
+    console.log("Connection closed");
     console.log(event);
   }
   function getFortune() {
