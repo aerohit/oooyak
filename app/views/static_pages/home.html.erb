@@ -1,5 +1,5 @@
 <script>
-  var fortuneSocket = new WebSocket("ws://localhost:9000/fortunesocket");
+  var fortuneSocket = new WebSocket("ws://95.85.61.4:9000/fortunesocket");
   fortuneSocket.onmessage = function (event) {
     console.log(event);
     document.getElementById("fortune").innerHTML = event.data;
