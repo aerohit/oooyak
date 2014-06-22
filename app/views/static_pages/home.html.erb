@@ -4,7 +4,7 @@
     console.log(event);
     document.getElementById("fortune").innerHTML = event.data;
   }
-  <%#Yay code duplication.%>
+  <!--Yay code duplication.-->
   fortuneSocket.onopen = function (event) {
     console.log("Connection opened");
     console.log(event);
@@ -20,6 +20,34 @@
   function getFortune() {
     fortuneSocket.send("Here's some text that the server is eagerly awaiting!");
   }
+
+  var broadcastSocket = new WebSocket("ws://localhost:9000/broadcaststrings");
+  <%#var broadcastSocket = new WebSocket("ws://localhost:9000/broadcastsocket");%>
+  broadcastSocket.onmessage = function (event) {
+    console.log(event.data);
+    var greeting = event.data;
+    var li = document.createElement("li");
+    var liText = document.createTextNode(greeting);
+    li.appendChild(liText);
+    document.getElementById("broadcast").appendChild(li);
+  }
+  <!--Yay code duplication.-->
+  broadcastSocket.onopen = function (event) {
+    console.log("Connection opened");
+    console.log(event);
+  }
+  broadcastSocket.onerror = function (event) {
+    console.log("Connection error");
+    console.log(event);
+  }
+  broadcastSocket.onclose = function (event) {
+    console.log("Connection closed");
+    console.log(event);
+  }
+  function broadcastMessage() {
+    var message = document.getElementById("message").value;
+    broadcastSocket.send(message);
+  }
 </script>
 
 <h1>Would you like to know your fotune?</h1>
@@ -29,3 +57,8 @@
 <button type="button" onclick="getFortune();">Get Fortune</button>
 
 <p id="fortune"></p>
+
+<input type="text" id="message">
+<input type="submit" value="Broadcast" onclick="broadcastMessage();">
+
+<ul id="broadcast" style="list-style-type: none;"></ul>
