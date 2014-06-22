@@ -1,5 +1,7 @@
 <script>
-  var fortuneSocket = new WebSocket("ws://95.85.61.4:9000/fortunesocket");
+  var hostname = "ws://" + window.location.hostname + ":9000";
+  console.log("The hostname " + hostname);
+  var fortuneSocket = new WebSocket(hostname + "/fortunesocket");
   fortuneSocket.onmessage = function (event) {
     console.log(event);
     document.getElementById("fortune").innerHTML = event.data;
@@ -21,7 +23,7 @@
     fortuneSocket.send("Here's some text that the server is eagerly awaiting!");
   }
 
-  var broadcastSocket = new WebSocket("ws://localhost:9000/broadcaststrings");
+  var broadcastSocket = new WebSocket(hostname + "/broadcaststrings");
   <%#var broadcastSocket = new WebSocket("ws://localhost:9000/broadcastsocket");%>
   broadcastSocket.onmessage = function (event) {
     console.log(event.data);
