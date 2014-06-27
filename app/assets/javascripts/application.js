@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require websockets_client
 //= require react
+//= require JSXTransformer
+//= require showdown.min
 //= require_tree .

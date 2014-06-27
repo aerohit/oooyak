@@ -10,3 +10,12 @@
 <input class="broadcast" type="submit" value="Broadcast">
 
 <ul id="broadcast" style="list-style-type: none;"></ul>
+
+<div id="example"></div>
+<script type="text/jsx">
+  /** @jsx React.DOM */
+  React.renderComponent(
+    <h1>Hello, world!</h1>,
+    document.getElementById('example')
+  );
+</script>
