@@ -12,6 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require static_pages
+//= require websockets_client
 //= require react
 //= require_tree .
