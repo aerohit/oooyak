@@ -51,5 +51,5 @@ broadcastSocket.onclose = function (event) {
   console.log(event);
 }
 
-document.querySelector('button').addEventListener('click', getFortune);
+document.querySelector('.fortune').addEventListener('click', getFortune);
 document.querySelector('.broadcast').addEventListener('click', broadcastMessage);
