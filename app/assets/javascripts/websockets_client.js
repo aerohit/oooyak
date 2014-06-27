@@ -1,8 +1,8 @@
-console.log("The hostname " + hostname);
-
 var hostname = "ws://" + window.location.hostname + ":9000";
 var fortuneSocket = new WebSocket(hostname + "/fortunesocket");
 var broadcastSocket = new WebSocket(hostname + "/broadcaststrings");
+
+console.log("The hostname " + hostname);
 
 var getFortune = function getFortune() {
   fortuneSocket.send("Here's some text that the server is eagerly awaiting!");

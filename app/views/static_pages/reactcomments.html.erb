@@ -4,10 +4,11 @@
   /**
    * @jsx React.DOM
    */
-  var data = [
-    {author: "Pete Hunt", text: "This is one bold comment"},
-    {author: "Jordan Walke", text: "This is *another* comment"}
-  ];
+  <%#var hostname = "http://" + window.location.hostname;%>
+  var hostname = "http://localhost:3000";
+  var dataEndPoint = hostname + "/ps/jsontestdata";
+  console.log("The hostname " + hostname);
+
   var converter = new Showdown.converter();
   var Comment = React.createClass({
     render: function() {
@@ -46,12 +47,30 @@
   });
 
   var CommentBox = React.createClass({
+    loadCommentsFromServer: function() {
+      $.ajax({
+        url: this.props.url,
+        dataType: 'json',
+        success: function(data) {
+          this.setState({data: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+    },
+    getInitialState: function() {
+      return {data: []};
+    },
+    componentWillMount: function() {
+      this.loadCommentsFromServer();
+      setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    },
     render: function() {
       return (
         <div className="commentBox">
-          Hello, world! I am a CommentBox.
           <h1>Comments</h1>
-          <CommentList data={this.props.data} />
+          <CommentList data={this.state.data} />
           <CommentForm />
         </div>
       );
@@ -59,7 +78,7 @@
   });
 
   React.renderComponent(
-    <CommentBox data={data} />,
+    <CommentBox url={dataEndPoint} pollInterval={20000} />,
     document.getElementById('content')
   );
 </script>
